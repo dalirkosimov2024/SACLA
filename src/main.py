@@ -1,6 +1,8 @@
 import tifffile as tiff
 import matplotlib.pyplot as plt 
 
+# this is a new edit
+
 path = "/home/dalir/Documents/cdt/japan/script/docs"
 name = "1478724-02-shot"
 
