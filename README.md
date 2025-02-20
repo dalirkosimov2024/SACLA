@@ -15,6 +15,6 @@ The setup should look something like this:
     |___ TESTFOLDER 
     |             |___ file1.txt
     |             |___ file2.txt
-    |             ... 
+    |             
     |___ NEW_PATH
 </pre>
