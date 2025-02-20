@@ -8,7 +8,7 @@ Scripts for "Investigating material response to laser imprint" SACLA experiment
 - "dev.log" logs all changes that occur
 
 The setup should look something like this:
-
+'''bash
  ___ src
     |___ watcher.py
     |___ dev.log
@@ -17,5 +17,4 @@ The setup should look something like this:
     |             |___ file2.txt
     |             ... 
     |___ NEW_PATH
-        
-    
+'''
