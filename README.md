@@ -10,11 +10,11 @@ Scripts for "Investigating material response to laser imprint" SACLA experiment
 The setup should look something like this:
 <pre>
  ___ src
-    |___ watcher.py
-    |___ dev.log
-    |___ PATH
-    |       |___ file1.txt
-    |       |___ file2.txt
-    |             
-    |___ NEW_PATH
+       |___ watcher.py
+       |___ dev.log
+       |___ PATH
+       |       |___ file1.txt
+       |       |___ file2.txt
+       |             
+       |___ NEW_PATH
 </pre>
