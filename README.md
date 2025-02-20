@@ -3,6 +3,7 @@ Scripts for "Investigating material response to laser imprint" SACLA experiment
 
 ## How to use watcher.py
 
+- Install watchdog: pip install watchdog
 - watcher.py uses watchdog to monitor a directory, which I called "PATH"
 - Any modifications that occur in this directory will be copied to "NEW_PATH" folder
 - "dev.log" logs all changes that occur
