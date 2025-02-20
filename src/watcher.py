@@ -26,7 +26,7 @@ if __name__ == "__main__":
                         format = '%(asctime)s -%(process)d - %(message)s',
                         datefmt = '%Y - %m - %d %H:%M:%S')
 
-    path = sys.argv[1] if len(sys.argv)>1 else '.'
+    path = f'{os.getcwd()}/PATH'
 
     # watch for changes in path
     watcher = Observer()
