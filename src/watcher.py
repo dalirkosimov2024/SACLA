@@ -46,12 +46,8 @@ def copy_from_sftp(sftp, file):
 
     file_name = file
     print("Fetching file ...")
-
-    try:
-      sftp_client.get(f'{tif_path}/{file_name}',f'{new_path}/{file_name}')
-      print("File succesfully downloaded.")
-    except FileNotFoundError as err:
-      print(f"File: {file_name} was not found on the SFTP server")
+    sftp_client.get(f'{tif_path}/{file_name}',f'{new_path}/{file_name}')
+   
 
 
 if __name__ == "__main__":
