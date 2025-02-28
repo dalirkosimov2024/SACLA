@@ -37,10 +37,14 @@ def csv_reader():
         for lines in csv.reader(file):
             name = lines[2]
             for file in os.listdir(path):
-                if file == name:
-                    shutil.copy(f'{path}/{file}', f'{new_path}/{file}')
-                    print(f'Successfully copied {file}')
-        time.sleep(10)
+                if os.path.exists(f'{new_path}/{file}'):
+                    pass
+                elif not os.path.exists(f'{new_path}/{file}'):
+                    if file == name:
+                        time.sleep(10)
+                        shutil.copy(f'{path}/{file}', f'{new_path}/{file}')
+                        print(f'Successfully copied {file} to NEW_PATH')
+       
 
 
 
@@ -48,10 +52,9 @@ if __name__ == "__main__":
     path = f'{os.getcwd()}/PATH'
     new_path = f'{os.getcwd()}/NEW_PATH'
 
-    watcher_thread = threading.Thread(target=watcher, daemon=True)
-    csv_thread = threading.Thread(target = csv_reader, daemon=True)
-
+    watcher_thread = threading.Thread(target=watcher)
     watcher_thread.start()
+    csv_thread = threading.Thread(target = csv_reader)
     csv_thread.start()
 
  
