@@ -6,8 +6,9 @@ import csv
 import queue
 import threading
 
-
 def watcher():
+# monitors 'path' and appends any new files to 'logger.csv'
+
     seen_files = set(os.listdir(path))
     try:
         while True:
@@ -20,9 +21,9 @@ def watcher():
     except KeyboardInterrupt:
         print("Stopping...")
 
-
-
 def appender(file_name):
+# appends file_name to a csv file
+
     logger = 'logger.csv'
     current_time = datetime.now().strftime('%H:%M:%S')
     current_date = datetime.now().strftime('%d-%m-%Y')
@@ -33,6 +34,8 @@ def appender(file_name):
 
 
 def csv_reader():
+# reads the csv file, and copies the contents in order to 'new_path'
+
     try:
         while True:
              with open('logger.csv', mode='r') as file:
@@ -50,9 +53,6 @@ def csv_reader():
     except KeyboardInterrupt:
         print("Stopping...")
        
-
-
-
 if __name__ == "__main__":
     path = f'{os.getcwd()}/PATH'
     new_path = f'{os.getcwd()}/NEW_PATH'
