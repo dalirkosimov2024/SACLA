@@ -14,11 +14,11 @@ def watcher():
             current_files = set(os.listdir(path))
             new_files = current_files - seen_files
             for file in sorted(new_files):
-                print(file)
                 appender(file)
             seen_files.update(new_files) 
+            time.sleep(1)
     except KeyboardInterrupt:
-        print("Stopping")
+        print("Stopping...")
 
 
 
@@ -29,21 +29,26 @@ def appender(file_name):
     with open(logger, mode='a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow([current_date,current_time, file_name])
-    print(f"File created in PATH: {current_date}, {current_time}, {file_name}")
+    print(f"File created in PATH: {file_name} ({current_date}, {current_time})")
 
 
 def csv_reader():
-     with open('logger.csv', mode='r') as file:
-        for lines in csv.reader(file):
-            name = lines[2]
-            for file in os.listdir(path):
-                if os.path.exists(f'{new_path}/{file}'):
-                    pass
-                elif not os.path.exists(f'{new_path}/{file}'):
-                    if file == name:
-                        time.sleep(10)
-                        shutil.copy(f'{path}/{file}', f'{new_path}/{file}')
-                        print(f'Successfully copied {file} to NEW_PATH')
+    try:
+        while True:
+             with open('logger.csv', mode='r') as file:
+                for lines in csv.reader(file):
+                    name = lines[2]
+                    for file in os.listdir(path):
+                        if os.path.exists(f'{new_path}/{file}'):
+                            pass
+                        elif not os.path.exists(f'{new_path}/{file}'):
+                            if file == name:
+                                time.sleep(10)
+                                shutil.copy(f'{path}/{file}', f'{new_path}/{file}')
+                                print(f'Successfully copied {file} to NEW_PATH')
+             time.sleep(1)
+    except KeyboardInterrupt:
+        print("Stopping...")
        
 
 
