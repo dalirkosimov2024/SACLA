@@ -5,6 +5,10 @@ from datetime import datetime
 import csv
 import queue
 import threading
+from pydrive2.drive import GoogleDrive 
+from pydrive2.auth import GoogleAuth 
+from oauth2client.service_account import ServiceAccountCredentials
+
 
 def watcher():
 # monitors 'path' and appends any new files to 'logger.csv'
@@ -17,7 +21,7 @@ def watcher():
             for file in sorted(new_files):
                 appender(file)
             seen_files.update(new_files) 
-            time.sleep(1)
+            time.sleep(0.5)
     except KeyboardInterrupt:
         print("Stopping...")
 
@@ -46,20 +50,52 @@ def csv_reader():
                             pass
                         elif not os.path.exists(f'{new_path}/{file}'):
                             if file == name:
-                                time.sleep(10)
+                                time.sleep(8)
                                 shutil.copy(f'{path}/{file}', f'{new_path}/{file}')
                                 print(f'Successfully copied {file} to NEW_PATH')
+                                cloud(file)
              time.sleep(1)
     except KeyboardInterrupt:
         print("Stopping...")
-       
+
+def cloud(file):
+# Uploads a file unto a google drive
+
+    # Google drive API scope
+    scope = ['https://www.googleapis.com/auth/drive.file']
+
+    # Uploads the file unto a google drive -- this was specifically focused on the "TEST" folder
+    gauth = GoogleAuth()
+    gauth.credentials = ServiceAccountCredentials.from_json_keyfile_name(
+    'client_secrets.json' , scope
+)
+    drive = GoogleDrive(gauth)
+    name = os.path.basename(file)
+
+    f = drive.CreateFile({
+        'title': name,
+        'parents': [{'id' : '1yU-FGzhTI4O-1gwBoZuPa75XvyvujYs-'}]
+    })
+
+    f.Upload()
+    print(f"Uploaded {file} to cloud." )
+        
+  
+
 if __name__ == "__main__":
     path = f'{os.getcwd()}/PATH'
     new_path = f'{os.getcwd()}/NEW_PATH'
 
-    watcher_thread = threading.Thread(target=watcher)
-    watcher_thread.start()
-    csv_thread = threading.Thread(target = csv_reader)
-    csv_thread.start()
+    if True:
 
- 
+        watcher_thread = threading.Thread(target=watcher)
+        watcher_thread.start()
+        csv_thread = threading.Thread(target = csv_reader)
+        csv_thread.start()
+
+  
+
+    elif False:
+
+        cloud(new_path)
+        print("File uploaded to cloud")
